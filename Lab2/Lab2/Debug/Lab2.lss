@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm Tue Dec 07 12:38:33 2021
+AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm Tue Dec 07 13:41:22 2021
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
@@ -990,173 +990,187 @@ AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm Tue
                                  ; Created: 06/12/2021 14:16:08
                                  ; Author : hadia
                                  ;
-000000 940c 0012                 	jmp		MORSE
+000000 940c 0015                 	jmp		MORSE
                                  MESSAGE:
 000002 4148
 000003 4944
-C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm(9): warning: .cseg .db misalignment - padding zero byte
-000004 0000                      	.db		"HADI", $00
+000004 4920
+000005 4d53
+000006 4941
+000007 004c                      	.db		"HADI ISMAIL", $00
                                  	.equ	SLOWNESS = 1
-                                 	.equ	FREQUENCY = 6
+                                 	.equ	FREQUENCY = 5
                                  
                                  BTAB:
-000005 8860
-000006 90a8
-000007 2840
-000008 08d0
-000009 7820
-00000a 48b0
-00000b a0e0
-00000c 68f0
-00000d 50d8
-00000e c010
-00000f 1830
-000010 9870
-000011 c8b8                      	.db		$60, $88, $A8, $90, $40, $28, $D0, $08, $20, $78, $B0, $48, $E0, $A0, $F0, $68, $D8, $50, $10, $C0, $30, $18, $70, $98, $B8, $C8
+000008 8860
+000009 90a8
+00000a 2840
+00000b 08d0
+00000c 7820
+00000d 48b0
+00000e a0e0
+00000f 68f0
+000010 50d8
+000011 c010
+000012 1830
+000013 9870
+000014 c8b8                      	.db		$60, $88, $A8, $90, $40, $28, $D0, $08, $20, $78, $B0, $48, $E0, $A0, $F0, $68, $D8, $50, $10, $C0, $30, $18, $70, $98, $B8, $C8
                                  
                                  MORSE:
                                  	; Initierar stacken
-000012 e008                      	ldi		r16, HIGH(RAMEND)
-000013 bf0e                      	out		SPH, r16
-000014 ef0f                      	ldi		r16, LOW(RAMEND)
-000015 bf0d                      	out		SPL, r16
+000015 e008                      	ldi		r16, HIGH(RAMEND)
+000016 bf0e                      	out		SPH, r16
+000017 ef0f                      	ldi		r16, LOW(RAMEND)
+000018 bf0d                      	out		SPL, r16
                                  
                                  	; sätter Z-pekaren till första byte i Message
-000016 e0f0                      	ldi		ZH, HIGH(MESSAGE << 1)
-000017 e0e4                      	ldi		ZL, LOW(MESSAGE << 1)
+000019 e0f0                      	ldi		ZH, HIGH(MESSAGE << 1)
+00001a e0e4                      	ldi		ZL, LOW(MESSAGE << 1)
                                  
                                  	; Initierar PORTB4
-000018 e110                      	ldi		r17, $10	; Motsvarar 0001 0000 
-000019 b914                      	out		DDRB, r17	; så vi kan konfigurera bit 4 som utgång
+00001b e110                      	ldi		r17, $10	; Motsvarar 0001 0000 
+00001c b914                      	out		DDRB, r17	; så vi kan konfigurera bit 4 som utgång
                                  	
-00001a 940e 001f                 	call	GET_CHAR
-00001c 940e 0022                 	call	SEND_IT
+00001d 940e 0022                 	call	GET_CHAR
+00001f 940e 0025                 	call	SEND_IT
                                  	
                                  DONE:
-00001e cfff                      	rjmp	DONE
+000021 cfff                      	rjmp	DONE
                                  
                                  GET_CHAR:
-00001f 9105                      	lpm		r16, Z+
-000020 3000                      	cpi		r16, $00
-000021 9508                      	ret
+000022 9105                      	lpm		r16, Z+
+000023 3000                      	cpi		r16, $00
+000024 9508                      	ret
                                  
                                  SEND_IT:
                                  WHILE_CHAR:
-000022 940e 0026                 	call	ONE_CHAR
-000024 f7e9                      	brne	WHILE_CHAR
-000025 9508                      	ret
+000025 940e 0029                 	call	ONE_CHAR
+000027 f7e9                      	brne	WHILE_CHAR
+000028 9508                      	ret
                                  
                                  ONE_CHAR:
-000026 940e 002b                 	call	BEEP_CHAR
-000028 940e 001f                 	call	GET_CHAR
-00002a 9508                      	ret
+000029 940e 002e                 	call	BEEP_CHAR
+00002b 940e 0022                 	call	GET_CHAR
+00002d 9508                      	ret
                                  
                                  BEEP_CHAR:
-00002b 940e 0035                 	call		LOOKUP
-00002d 940e 0041                 	call		SEND
-00002f e01c                      	ldi			r17, 2 * FREQUENCY
-000030 931f                      	push		r17
-000031 940e 0046                 	call		NOBEEP ; 2 * FREQUENCY
-000033 911f                      	pop			r17
-000034 9508                      	ret
+00002e 940e 003b                 	call		LOOKUP
+000030 f022                      	brmi		SPACE
+000031 940e 0048                 	call		SEND
+000033 e01a                      	ldi			r17, 2 * FREQUENCY
+000034 c001                      	rjmp		NO_SPACE
+                                 
+                                 SPACE:
+000035 e11e                      	ldi			r17, 6 * FREQUENCY
+                                 
+                                 NO_SPACE:
+000036 931f                      	push		r17
+000037 940e 004d                 	call		NOBEEP ; 2 * FREQUENCY
+000039 911f                      	pop			r17
+00003a 9508                      	ret
                                  
                                  LOOKUP:
-000035 93ff                      	push	ZH
-000036 93ef                      	push	ZL
+00003b 5401                      	subi	r16, $41
+00003c f052                      	brmi	END_LOOKUP		; när mellanslag förekommer blir resultatet negativt. $20 - $41
                                  
-000037 5401                      	subi	r16, $41
-000038 e0f0                      	ldi		ZH, HIGH(BTAB << 1)
-000039 e0ea                      	ldi		ZL, LOW(BTAB << 1)
-00003a 0fe0                      	add		ZL, r16
-00003b 2711                      	clr		r17
-00003c 1ff1                      	adc		ZH, r17
-00003d 9104                      	lpm		r16, Z
+00003d 93ff                      	push	ZH
+00003e 93ef                      	push	ZL
                                  
-00003e 91ef                      	pop		ZL
-00003f 91ff                      	pop		ZH
-000040 9508                      	ret
+00003f e0f0                      	ldi		ZH, HIGH(BTAB << 1)
+000040 e1e0                      	ldi		ZL, LOW(BTAB << 1)
+                                 
+000041 0fe0                      	add		ZL, r16
+000042 2711                      	clr		r17
+000043 1ff1                      	adc		ZH, r17
+000044 9104                      	lpm		r16, Z
+                                 
+000045 91ef                      	pop		ZL
+000046 91ff                      	pop		ZH
+                                 
+                                 END_LOOKUP:
+000047 9508                      	ret
                                  
                                  SEND:
-000041 940e 004f                 	call	GET_BIT
-000043 940e 0051                 	call	SEND_BITS
-000045 9508                      	ret
+000048 940e 0056                 	call	GET_BIT
+00004a 940e 0058                 	call	SEND_BITS
+00004c 9508                      	ret
                                  
                                  NOBEEP:
-000046 b7de                      	in		YH, SPH
-000047 b7cd                      	in		YL, SPL
+00004d b7de                      	in		YH, SPH
+00004e b7cd                      	in		YL, SPL
                                  
-000048 982c                      	cbi		PORTB, 4
-000049 812b                      	ldd		r18, Y+3
-00004a 932f                      	push	r18
-00004b 940e 0069                 	call	DELAY
-00004d 912f                      	pop		r18
-00004e 9508                      	ret
+00004f 982c                      	cbi		PORTB, 4
+000050 812b                      	ldd		r18, Y+3
+000051 932f                      	push	r18
+000052 940e 0070                 	call	DELAY
+000054 912f                      	pop		r18
+000055 9508                      	ret
                                  
                                  GET_BIT:
-00004f 0f00                      	lsl		r16
-000050 9508                      	ret
+000056 0f00                      	lsl		r16
+000057 9508                      	ret
                                  
                                  SEND_BITS:
                                  WHILE_BIT:
-000051 940e 0055                 	call	BIT
-000053 f7e9                      	brne	WHILE_BIT
-000054 9508                      	ret
+000058 940e 005c                 	call	BIT
+00005a f7e9                      	brne	WHILE_BIT
+00005b 9508                      	ret
                                  
                                  BIT:
-000055 940e 005f                 	call	BEEP
-000057 e016                      	ldi		r17, 1 * FREQUENCY
-000058 931f                      	push	r17
-000059 940e 0046                 	call	NOBEEP ; 1 * FREQUENCY
-00005b 911f                      	pop		r17
-00005c 940e 004f                 	call	GET_BIT
-00005e 9508                      	ret
+00005c 940e 0066                 	call	BEEP
+00005e e015                      	ldi		r17, 1 * FREQUENCY
+00005f 931f                      	push	r17
+000060 940e 004d                 	call	NOBEEP ; 1 * FREQUENCY
+000062 911f                      	pop		r17
+000063 940e 0056                 	call	GET_BIT
+000065 9508                      	ret
                                  
                                  BEEP:
-00005f f410                      	brcc	SHORT_BEEP
-000060 e122                      	ldi		r18, 3 * FREQUENCY
-000061 c001                      	rjmp	DO
+000066 f410                      	brcc	SHORT_BEEP
+000067 e02f                      	ldi		r18, 3 * FREQUENCY
+000068 c001                      	rjmp	LONG_BEEP
                                  SHORT_BEEP:
-000062 e026                      	ldi		r18, 1 * FREQUENCY
-                                 DO:
-000063 9a2c                      	sbi		PORTB, 4
-000064 932f                      	push	r18
-000065 940e 0069                 	call	DELAY
-000067 912f                      	pop		r18
+000069 e025                      	ldi		r18, 1 * FREQUENCY
+                                 LONG_BEEP:
+00006a 9a2c                      	sbi		PORTB, 4
+00006b 932f                      	push	r18
+00006c 940e 0070                 	call	DELAY
+00006e 912f                      	pop		r18
                                  
-000068 9508                      	ret
+00006f 9508                      	ret
                                  
                                  DELAY:
-000069 b7de                      	in		YH, SPH
-00006a b7cd                      	in		YL, SPL
+000070 b7de                      	in		YH, SPH
+000071 b7cd                      	in		YL, SPL
                                  
-00006b 930f                      	push	r16
-00006c 931f                      	push	r17
-00006d 932f                      	push	r18
-00006e 920f                      	push	r0		; Detta används för att spara multiplikations resultatet
-00006f 921f                      	push	r1		; därför skyddar vi dem i stacken.
+000072 930f                      	push	r16
+000073 931f                      	push	r17
+000074 932f                      	push	r18
+000075 920f                      	push	r0		; Detta används för att spara multiplikations resultatet
+000076 921f                      	push	r1		; därför skyddar vi dem i stacken.
                                  
-000070 810b                      	ldd		r16, Y+3
+000077 810b                      	ldd		r16, Y+3
                                  
-000071 e021                      	ldi		r18, SLOWNESS
-000072 9f20                      	mul		r18, r16	; r16 är argumentet som avgör
-000073 2d20                      	mov		r18, r0		; hur länge loopen ska dröja
+000078 e021                      	ldi		r18, SLOWNESS
+000079 9f20                      	mul		r18, r16	; r16 är argumentet som avgör
+00007a 2d20                      	mov		r18, r0		; hur länge loopen ska dröja
                                  D_3:
-000074 e010                      	ldi		r17,0
+00007b e010                      	ldi		r17,0
                                  D_2:
-000075 e000                      	ldi		r16,0
+00007c e000                      	ldi		r16,0
                                  D_1:
-000076 950a                      	dec		r16
-000077 f7f1                      	brne	D_1
-000078 951a                      	dec		r17
-000079 f7d9                      	brne	D_2
-00007a 952a                      	dec		r18
-00007b f7c1                      	brne	D_3
+00007d 950a                      	dec		r16
+00007e f7f1                      	brne	D_1
+00007f 951a                      	dec		r17
+000080 f7d9                      	brne	D_2
+000081 952a                      	dec		r18
+000082 f7c1                      	brne	D_3
                                  	
-00007c 901f                      	pop		r1
-00007d 900f                      	pop		r0
-00007e 912f                      	pop		r18
-00007f 911f                      	pop		r17
-000080 910f                      	pop		r16
+000083 901f                      	pop		r1
+000084 900f                      	pop		r0
+000085 912f                      	pop		r18
+000086 911f                      	pop		r17
+000087 910f                      	pop		r16
                                  
 
 
@@ -1177,7 +1191,7 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   2 z  :   2 r0 :   3 r1 :   2 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  16 r17:  14 r18:  13 r19:   0 r20:   0 
+r13:   0 r14:   0 r15:   0 r16:  16 r17:  15 r18:  13 r19:   0 r20:   0 
 r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   2 
 r29:   2 r30:   5 r31:   5 
 Registers used: 11 out of 35 (31.4%)
@@ -1186,29 +1200,29 @@ Registers used: 11 out of 35 (31.4%)
 .lds  :   0 .sts  :   0 adc   :   1 add   :   1 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   1 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
-brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
+brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   2 
 brne  :   5 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :  16 cbi   :   1 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   1 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
 cpi   :   1 cpse  :   0 dec   :   3 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   4 inc   :   0 jmp   :   1 
-ld    :   0 ldd   :   2 ldi   :  14 lds   :   0 lpm   :   3 lsl   :   1 
+ld    :   0 ldd   :   2 ldi   :  15 lds   :   0 lpm   :   3 lsl   :   1 
 lsr   :   0 mov   :   1 movw  :   0 mul   :   1 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   3 pop   :  11 
-push  :  11 rcall :   0 ret   :  12 reti  :   0 rjmp  :   2 rol   :   0 
+push  :  11 rcall :   0 ret   :  12 reti  :   0 rjmp  :   3 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   1 sbic  :   0 sbis  :   0 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   0 
 sub   :   0 subi  :   1 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 24 out of 113 (21.2%)
+Instructions used: 25 out of 113 (22.1%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000104    228     32    260   32768   0.8%
+[.cseg] 0x000000 0x000112    236     38    274   32768   0.8%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 
-Assembly complete, 0 errors, 1 warnings
+Assembly complete, 0 errors, 0 warnings

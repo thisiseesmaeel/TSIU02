@@ -31,19 +31,22 @@
   <WHILE_CHAR><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>43</LINE></WHILE_CHAR>
   <ONE_CHAR><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>48</LINE></ONE_CHAR>
   <BEEP_CHAR><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>53</LINE></BEEP_CHAR>
-  <LOOKUP><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>62</LINE></LOOKUP>
-  <SEND><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>78</LINE></SEND>
-  <NOBEEP><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>83</LINE></NOBEEP>
-  <GET_BIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>94</LINE></GET_BIT>
-  <SEND_BITS><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>98</LINE></SEND_BITS>
-  <DELAY><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>127</LINE></DELAY>
-  <WHILE_BIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>99</LINE></WHILE_BIT>
-  <BIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>104</LINE></BIT>
-  <BEEP><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>113</LINE></BEEP>
-  <SHORT_BEEP><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>117</LINE></SHORT_BEEP>
-  <DO><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>119</LINE></DO>
-  <D_3><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>142</LINE></D_3>
-  <D_2><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>144</LINE></D_2>
-  <D_1><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>146</LINE></D_1>
+  <LOOKUP><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>69</LINE></LOOKUP>
+  <SPACE><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>60</LINE></SPACE>
+  <SEND><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>90</LINE></SEND>
+  <NO_SPACE><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>63</LINE></NO_SPACE>
+  <NOBEEP><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>95</LINE></NOBEEP>
+  <END_LOOKUP><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>87</LINE></END_LOOKUP>
+  <GET_BIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>106</LINE></GET_BIT>
+  <SEND_BITS><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>110</LINE></SEND_BITS>
+  <DELAY><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>139</LINE></DELAY>
+  <WHILE_BIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>111</LINE></WHILE_BIT>
+  <BIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>116</LINE></BIT>
+  <BEEP><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>125</LINE></BEEP>
+  <SHORT_BEEP><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>129</LINE></SHORT_BEEP>
+  <LONG_BEEP><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>131</LINE></LONG_BEEP>
+  <D_3><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>154</LINE></D_3>
+  <D_2><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>156</LINE></D_2>
+  <D_1><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm</FILE><LINE>158</LINE></D_1>
  </LABELS>
 </ASSEMBLER_INFO>

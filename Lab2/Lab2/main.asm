@@ -6,9 +6,9 @@
 ;
 	jmp		MORSE
 MESSAGE:
-	.db		"HADI", $00
+	.db		"HADI ISMAIL", $00
 	.equ	SLOWNESS = 1
-	.equ	FREQUENCY = 6
+	.equ	FREQUENCY = 5
 
 BTAB:
 	.db		$60, $88, $A8, $90, $40, $28, $D0, $08, $20, $78, $B0, $48, $E0, $A0, $F0, $68, $D8, $50, $10, $C0, $30, $18, $70, $98, $B8, $C8
@@ -52,20 +52,30 @@ ONE_CHAR:
 
 BEEP_CHAR:
 	call		LOOKUP
+	brmi		SPACE
 	call		SEND
 	ldi			r17, 2 * FREQUENCY
+	rjmp		NO_SPACE
+
+SPACE:
+	ldi			r17, 6 * FREQUENCY
+
+NO_SPACE:
 	push		r17
 	call		NOBEEP ; 2 * FREQUENCY
 	pop			r17
 	ret
 
 LOOKUP:
+	subi	r16, $41
+	brmi	END_LOOKUP		; när mellanslag förekommer blir resultatet negativt. $20 - $41
+
 	push	ZH
 	push	ZL
 
-	subi	r16, $41
 	ldi		ZH, HIGH(BTAB << 1)
 	ldi		ZL, LOW(BTAB << 1)
+
 	add		ZL, r16
 	clr		r17
 	adc		ZH, r17
@@ -73,6 +83,8 @@ LOOKUP:
 
 	pop		ZL
 	pop		ZH
+
+END_LOOKUP:
 	ret
 
 SEND:
@@ -113,10 +125,10 @@ BIT:
 BEEP:
 	brcc	SHORT_BEEP
 	ldi		r18, 3 * FREQUENCY
-	rjmp	DO
+	rjmp	LONG_BEEP
 SHORT_BEEP:
 	ldi		r18, 1 * FREQUENCY
-DO:
+LONG_BEEP:
 	sbi		PORTB, 4
 	push	r18
 	call	DELAY
