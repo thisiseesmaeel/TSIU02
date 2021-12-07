@@ -2,13 +2,12 @@
 ; Lab2.asm
 ;
 ; Created: 06/12/2021 14:16:08
-; Author : hadia
 ;
 	jmp		MORSE
 MESSAGE:
-	.db		"HADI ISMAIL", $00
+	.db		"DATORTEKNIK", $00
 	.equ	SLOWNESS = 1
-	.equ	FREQUENCY = 5
+	.equ	FREQUENCY = 6
 
 BTAB:
 	.db		$60, $88, $A8, $90, $40, $28, $D0, $08, $20, $78, $B0, $48, $E0, $A0, $F0, $68, $D8, $50, $10, $C0, $30, $18, $70, $98, $B8, $C8
@@ -62,7 +61,7 @@ SPACE:
 
 NO_SPACE:
 	push		r17
-	call		NOBEEP ; 2 * FREQUENCY
+	call		NOBEEP ; 2 * FREQUENCY eller 6 * FREQUENCY baserad på om det är mellanslag eller inte
 	pop			r17
 	ret
 

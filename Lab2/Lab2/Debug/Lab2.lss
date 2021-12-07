@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm Tue Dec 07 13:41:22 2021
+AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm Tue Dec 07 18:57:13 2021
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
@@ -990,187 +990,190 @@ AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab2\Lab2\main.asm Tue
                                  ; Created: 06/12/2021 14:16:08
                                  ; Author : hadia
                                  ;
-000000 940c 0015                 	jmp		MORSE
+000000 940c 0018                 	jmp		MORSE
                                  MESSAGE:
 000002 4148
-000003 4944
-000004 4920
-000005 4d53
-000006 4941
-000007 004c                      	.db		"HADI ISMAIL", $00
+000003 4144
+000004 204e
+000005 4148
+000006 4144
+000007 204e
+000008 4148
+000009 4144
+00000a 004e                      	.db		"HADAN HADAN HADAN", $00
                                  	.equ	SLOWNESS = 1
-                                 	.equ	FREQUENCY = 5
+                                 	.equ	FREQUENCY = 6
                                  
                                  BTAB:
-000008 8860
-000009 90a8
-00000a 2840
-00000b 08d0
-00000c 7820
-00000d 48b0
-00000e a0e0
-00000f 68f0
-000010 50d8
-000011 c010
-000012 1830
-000013 9870
-000014 c8b8                      	.db		$60, $88, $A8, $90, $40, $28, $D0, $08, $20, $78, $B0, $48, $E0, $A0, $F0, $68, $D8, $50, $10, $C0, $30, $18, $70, $98, $B8, $C8
+00000b 8860
+00000c 90a8
+00000d 2840
+00000e 08d0
+00000f 7820
+000010 48b0
+000011 a0e0
+000012 68f0
+000013 50d8
+000014 c010
+000015 1830
+000016 9870
+000017 c8b8                      	.db		$60, $88, $A8, $90, $40, $28, $D0, $08, $20, $78, $B0, $48, $E0, $A0, $F0, $68, $D8, $50, $10, $C0, $30, $18, $70, $98, $B8, $C8
                                  
                                  MORSE:
                                  	; Initierar stacken
-000015 e008                      	ldi		r16, HIGH(RAMEND)
-000016 bf0e                      	out		SPH, r16
-000017 ef0f                      	ldi		r16, LOW(RAMEND)
-000018 bf0d                      	out		SPL, r16
+000018 e008                      	ldi		r16, HIGH(RAMEND)
+000019 bf0e                      	out		SPH, r16
+00001a ef0f                      	ldi		r16, LOW(RAMEND)
+00001b bf0d                      	out		SPL, r16
                                  
                                  	; sätter Z-pekaren till första byte i Message
-000019 e0f0                      	ldi		ZH, HIGH(MESSAGE << 1)
-00001a e0e4                      	ldi		ZL, LOW(MESSAGE << 1)
+00001c e0f0                      	ldi		ZH, HIGH(MESSAGE << 1)
+00001d e0e4                      	ldi		ZL, LOW(MESSAGE << 1)
                                  
                                  	; Initierar PORTB4
-00001b e110                      	ldi		r17, $10	; Motsvarar 0001 0000 
-00001c b914                      	out		DDRB, r17	; så vi kan konfigurera bit 4 som utgång
+00001e e110                      	ldi		r17, $10	; Motsvarar 0001 0000 
+00001f b914                      	out		DDRB, r17	; så vi kan konfigurera bit 4 som utgång
                                  	
-00001d 940e 0022                 	call	GET_CHAR
-00001f 940e 0025                 	call	SEND_IT
+000020 940e 0025                 	call	GET_CHAR
+000022 940e 0028                 	call	SEND_IT
                                  	
                                  DONE:
-000021 cfff                      	rjmp	DONE
+000024 cfff                      	rjmp	DONE
                                  
                                  GET_CHAR:
-000022 9105                      	lpm		r16, Z+
-000023 3000                      	cpi		r16, $00
-000024 9508                      	ret
+000025 9105                      	lpm		r16, Z+
+000026 3000                      	cpi		r16, $00
+000027 9508                      	ret
                                  
                                  SEND_IT:
                                  WHILE_CHAR:
-000025 940e 0029                 	call	ONE_CHAR
-000027 f7e9                      	brne	WHILE_CHAR
-000028 9508                      	ret
+000028 940e 002c                 	call	ONE_CHAR
+00002a f7e9                      	brne	WHILE_CHAR
+00002b 9508                      	ret
                                  
                                  ONE_CHAR:
-000029 940e 002e                 	call	BEEP_CHAR
-00002b 940e 0022                 	call	GET_CHAR
-00002d 9508                      	ret
+00002c 940e 0031                 	call	BEEP_CHAR
+00002e 940e 0025                 	call	GET_CHAR
+000030 9508                      	ret
                                  
                                  BEEP_CHAR:
-00002e 940e 003b                 	call		LOOKUP
-000030 f022                      	brmi		SPACE
-000031 940e 0048                 	call		SEND
-000033 e01a                      	ldi			r17, 2 * FREQUENCY
-000034 c001                      	rjmp		NO_SPACE
+000031 940e 003e                 	call		LOOKUP
+000033 f022                      	brmi		SPACE
+000034 940e 004b                 	call		SEND
+000036 e01c                      	ldi			r17, 2 * FREQUENCY
+000037 c001                      	rjmp		NO_SPACE
                                  
                                  SPACE:
-000035 e11e                      	ldi			r17, 6 * FREQUENCY
+000038 e214                      	ldi			r17, 6 * FREQUENCY
                                  
                                  NO_SPACE:
-000036 931f                      	push		r17
-000037 940e 004d                 	call		NOBEEP ; 2 * FREQUENCY
-000039 911f                      	pop			r17
-00003a 9508                      	ret
+000039 931f                      	push		r17
+00003a 940e 0050                 	call		NOBEEP ; 2 * FREQUENCY eller 6 * FREQUENCY baserad på om det är mellanslag eller inte
+00003c 911f                      	pop			r17
+00003d 9508                      	ret
                                  
                                  LOOKUP:
-00003b 5401                      	subi	r16, $41
-00003c f052                      	brmi	END_LOOKUP		; när mellanslag förekommer blir resultatet negativt. $20 - $41
+00003e 5401                      	subi	r16, $41
+00003f f052                      	brmi	END_LOOKUP		; när mellanslag förekommer blir resultatet negativt. $20 - $41
                                  
-00003d 93ff                      	push	ZH
-00003e 93ef                      	push	ZL
+000040 93ff                      	push	ZH
+000041 93ef                      	push	ZL
                                  
-00003f e0f0                      	ldi		ZH, HIGH(BTAB << 1)
-000040 e1e0                      	ldi		ZL, LOW(BTAB << 1)
+000042 e0f0                      	ldi		ZH, HIGH(BTAB << 1)
+000043 e1e6                      	ldi		ZL, LOW(BTAB << 1)
                                  
-000041 0fe0                      	add		ZL, r16
-000042 2711                      	clr		r17
-000043 1ff1                      	adc		ZH, r17
-000044 9104                      	lpm		r16, Z
+000044 0fe0                      	add		ZL, r16
+000045 2711                      	clr		r17
+000046 1ff1                      	adc		ZH, r17
+000047 9104                      	lpm		r16, Z
                                  
-000045 91ef                      	pop		ZL
-000046 91ff                      	pop		ZH
+000048 91ef                      	pop		ZL
+000049 91ff                      	pop		ZH
                                  
                                  END_LOOKUP:
-000047 9508                      	ret
+00004a 9508                      	ret
                                  
                                  SEND:
-000048 940e 0056                 	call	GET_BIT
-00004a 940e 0058                 	call	SEND_BITS
-00004c 9508                      	ret
+00004b 940e 0059                 	call	GET_BIT
+00004d 940e 005b                 	call	SEND_BITS
+00004f 9508                      	ret
                                  
                                  NOBEEP:
-00004d b7de                      	in		YH, SPH
-00004e b7cd                      	in		YL, SPL
+000050 b7de                      	in		YH, SPH
+000051 b7cd                      	in		YL, SPL
                                  
-00004f 982c                      	cbi		PORTB, 4
-000050 812b                      	ldd		r18, Y+3
-000051 932f                      	push	r18
-000052 940e 0070                 	call	DELAY
-000054 912f                      	pop		r18
-000055 9508                      	ret
+000052 982c                      	cbi		PORTB, 4
+000053 812b                      	ldd		r18, Y+3
+000054 932f                      	push	r18
+000055 940e 0073                 	call	DELAY
+000057 912f                      	pop		r18
+000058 9508                      	ret
                                  
                                  GET_BIT:
-000056 0f00                      	lsl		r16
-000057 9508                      	ret
+000059 0f00                      	lsl		r16
+00005a 9508                      	ret
                                  
                                  SEND_BITS:
                                  WHILE_BIT:
-000058 940e 005c                 	call	BIT
-00005a f7e9                      	brne	WHILE_BIT
-00005b 9508                      	ret
+00005b 940e 005f                 	call	BIT
+00005d f7e9                      	brne	WHILE_BIT
+00005e 9508                      	ret
                                  
                                  BIT:
-00005c 940e 0066                 	call	BEEP
-00005e e015                      	ldi		r17, 1 * FREQUENCY
-00005f 931f                      	push	r17
-000060 940e 004d                 	call	NOBEEP ; 1 * FREQUENCY
-000062 911f                      	pop		r17
-000063 940e 0056                 	call	GET_BIT
-000065 9508                      	ret
+00005f 940e 0069                 	call	BEEP
+000061 e016                      	ldi		r17, 1 * FREQUENCY
+000062 931f                      	push	r17
+000063 940e 0050                 	call	NOBEEP ; 1 * FREQUENCY
+000065 911f                      	pop		r17
+000066 940e 0059                 	call	GET_BIT
+000068 9508                      	ret
                                  
                                  BEEP:
-000066 f410                      	brcc	SHORT_BEEP
-000067 e02f                      	ldi		r18, 3 * FREQUENCY
-000068 c001                      	rjmp	LONG_BEEP
+000069 f410                      	brcc	SHORT_BEEP
+00006a e122                      	ldi		r18, 3 * FREQUENCY
+00006b c001                      	rjmp	LONG_BEEP
                                  SHORT_BEEP:
-000069 e025                      	ldi		r18, 1 * FREQUENCY
+00006c e026                      	ldi		r18, 1 * FREQUENCY
                                  LONG_BEEP:
-00006a 9a2c                      	sbi		PORTB, 4
-00006b 932f                      	push	r18
-00006c 940e 0070                 	call	DELAY
-00006e 912f                      	pop		r18
+00006d 9a2c                      	sbi		PORTB, 4
+00006e 932f                      	push	r18
+00006f 940e 0073                 	call	DELAY
+000071 912f                      	pop		r18
                                  
-00006f 9508                      	ret
+000072 9508                      	ret
                                  
                                  DELAY:
-000070 b7de                      	in		YH, SPH
-000071 b7cd                      	in		YL, SPL
+000073 b7de                      	in		YH, SPH
+000074 b7cd                      	in		YL, SPL
                                  
-000072 930f                      	push	r16
-000073 931f                      	push	r17
-000074 932f                      	push	r18
-000075 920f                      	push	r0		; Detta används för att spara multiplikations resultatet
-000076 921f                      	push	r1		; därför skyddar vi dem i stacken.
+000075 930f                      	push	r16
+000076 931f                      	push	r17
+000077 932f                      	push	r18
+000078 920f                      	push	r0		; Detta används för att spara multiplikations resultatet
+000079 921f                      	push	r1		; därför skyddar vi dem i stacken.
                                  
-000077 810b                      	ldd		r16, Y+3
+00007a 810b                      	ldd		r16, Y+3
                                  
-000078 e021                      	ldi		r18, SLOWNESS
-000079 9f20                      	mul		r18, r16	; r16 är argumentet som avgör
-00007a 2d20                      	mov		r18, r0		; hur länge loopen ska dröja
+00007b e021                      	ldi		r18, SLOWNESS
+00007c 9f20                      	mul		r18, r16	; r16 är argumentet som avgör
+00007d 2d20                      	mov		r18, r0		; hur länge loopen ska dröja
                                  D_3:
-00007b e010                      	ldi		r17,0
+00007e e010                      	ldi		r17,0
                                  D_2:
-00007c e000                      	ldi		r16,0
+00007f e000                      	ldi		r16,0
                                  D_1:
-00007d 950a                      	dec		r16
-00007e f7f1                      	brne	D_1
-00007f 951a                      	dec		r17
-000080 f7d9                      	brne	D_2
-000081 952a                      	dec		r18
-000082 f7c1                      	brne	D_3
+000080 950a                      	dec		r16
+000081 f7f1                      	brne	D_1
+000082 951a                      	dec		r17
+000083 f7d9                      	brne	D_2
+000084 952a                      	dec		r18
+000085 f7c1                      	brne	D_3
                                  	
-000083 901f                      	pop		r1
-000084 900f                      	pop		r0
-000085 912f                      	pop		r18
-000086 911f                      	pop		r17
-000087 910f                      	pop		r16
+000086 901f                      	pop		r1
+000087 900f                      	pop		r0
+000088 912f                      	pop		r18
+000089 911f                      	pop		r17
+00008a 910f                      	pop		r16
                                  
 
 
@@ -1221,7 +1224,7 @@ Instructions used: 25 out of 113 (22.1%)
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000112    236     38    274   32768   0.8%
+[.cseg] 0x000000 0x000118    236     44    280   32768   0.9%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 
