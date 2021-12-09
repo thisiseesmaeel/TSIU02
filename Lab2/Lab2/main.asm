@@ -5,7 +5,7 @@
 ;
 	jmp		MORSE
 MESSAGE:
-	.db		"DATORTEKNIK", $00
+	.db		"HADAN HADAN HADAN", $00
 	.equ	SLOWNESS = 1
 	.equ	FREQUENCY = 6
 
