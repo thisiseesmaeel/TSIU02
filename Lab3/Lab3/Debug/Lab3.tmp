@@ -22,9 +22,39 @@
   <FILE>Lab3.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <MAIN><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>20</LINE></MAIN>
-  <INTERRUPT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>50</LINE></INTERRUPT>
-  <TIMER1_INIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>38</LINE></TIMER1_INIT>
-  <WAIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>35</LINE></WAIT>
+  <LINE><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>9</LINE></LINE>
+  <TIME><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>13</LINE></TIME>
+  <MAIN><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>37</LINE></MAIN>
+  <SECOND_INTERRUPT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>304</LINE></SECOND_INTERRUPT>
+  <WAIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>87</LINE></WAIT>
+  <LCD_INIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>113</LINE></LCD_INIT>
+  <TIMER_INIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>293</LINE></TIMER_INIT>
+  <FOREVER><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>81</LINE></FOREVER>
+  <TIME_FORMAT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>253</LINE></TIME_FORMAT>
+  <LINE_PRINT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>196</LINE></LINE_PRINT>
+  <D_2><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>92</LINE></D_2>
+  <D_1><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>94</LINE></D_1>
+  <BACKLIGHT_ON><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>105</LINE></BACKLIGHT_ON>
+  <BACKLIGHT_OFF><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>109</LINE></BACKLIGHT_OFF>
+  <LCD_WRITE4><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>140</LINE></LCD_WRITE4>
+  <LCD_COMMAND><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>170</LINE></LCD_COMMAND>
+  <LCD_WRITE8><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>156</LINE></LCD_WRITE8>
+  <LCD_ASCII><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>165</LINE></LCD_ASCII>
+  <LCD_HOME><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>176</LINE></LCD_HOME>
+  <LCD_ERASE><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>181</LINE></LCD_ERASE>
+  <LCD_PRINT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>186</LINE></LCD_PRINT>
+  <AGAIN><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>187</LINE></AGAIN>
+  <DONE><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>193</LINE></DONE>
+  <TIME_TICK><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>203</LINE></TIME_TICK>
+  <FOR_LOOP><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>213</LINE></FOR_LOOP>
+  <LSDH><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>227</LINE></LSDH>
+  <MSDH><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>224</LINE></MSDH>
+  <MSD><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>230</LINE></MSD>
+  <BLABLA><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>233</LINE></BLABLA>
+  <INC_NEXT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>239</LINE></INC_NEXT>
+  <END><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>248</LINE></END>
+  <CONVERT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>267</LINE></CONVERT>
+  <DONE_CONVERT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>287</LINE></DONE_CONVERT>
+  <EVEN><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm</FILE><LINE>283</LINE></EVEN>
  </LABELS>
 </ASSEMBLER_INFO>
