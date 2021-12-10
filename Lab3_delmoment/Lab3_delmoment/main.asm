@@ -50,7 +50,9 @@ MAIN:
 	call	WAIT
 	call	LCD_INIT
 	
-	
+	ldi		r16, 9
+	sts		$150, r16
+
 	ldi		r16, 9
 	sts		$150, r16
 
@@ -77,36 +79,28 @@ MAIN:
 	sei
 	
 FOREVER:
-	
+	call	TIME_FORMAT
+	call	LINE_PRINT
 	jmp		FOREVER
 
 
-	; For ATMEGA326 with clock frequency of 16 MHz WAIT takes
-	; approximately 3 ms
 WAIT:
 	push	r16
 	push	r17
-	push	r18
 
-	ldi		r18, 3
-D_3:
-	ldi		r17,0
+	ldi		r17, 50
 D_2:
-	ldi		r16,0
+	ldi		r16, 0
 D_1:
 	dec		r16
 	brne	D_1
 	dec		r17
 	brne	D_2
-	dec		r18
-	brne	D_3
 	
-	pop		r18
 	pop		r17
 	pop		r16
 
 	ret
-
 
 BACKLIGHT_ON:
 	sbi		PORTB, BLGT
@@ -134,7 +128,7 @@ LCD_INIT:
 
 	ldi		r16, DISP_ON
 	call	LCD_COMMAND
-
+	
 	ldi		r16, LCD_CLR
 	call	LCD_COMMAND
 
@@ -207,6 +201,9 @@ LINE_PRINT:
 	ret
 
 TIME_TICK:
+	push	ZH
+	push	ZL
+
 	ldi		ZH, HIGH(TIME)
 	ldi		ZL, LOW(TIME)	; Hh:Mm:Ss => Z points to last s
 	
@@ -249,6 +246,8 @@ INC_NEXT:
 
 
 END:
+	pop		ZL
+	pop		ZH
 	ret
 
 TIME_FORMAT:
@@ -304,12 +303,26 @@ TIMER_INIT:
 
 SECOND_INTERRUPT:
 	push	r16
+	push	r17
+	push	r18
+	push	ZH
+	push	ZL
+	push	YH
+	push	YL
+
 	in		r16, SREG
+	push	r16
 
 	call	TIME_TICK
-	call	TIME_FORMAT
-	call	LINE_PRINTcd
 
+	pop		r16
 	out		SREG, r16
+
+	pop		YL
+	pop		YH
+	pop		ZL
+	pop		ZH
+	pop		r18
+	pop		r17
 	pop		r16
 	reti
