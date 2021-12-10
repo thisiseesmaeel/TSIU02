@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm Fri Dec 10 13:44:20 2021
+AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm Fri Dec 10 15:39:41 2021
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
@@ -988,13 +988,13 @@ AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm Fri
                                  ; Lab3.asm
                                  ;
                                  	.dseg
-                                 	.org	$100
+                                 	.org	$200
                                  LINE:
-000100                           	.byte	9
+000200                           	.byte	9
                                  
-                                 	.org	$150
+                                 	.org	$300
                                  TIME:
-000150                           	.byte	7
+000300                           	.byte	7
                                  
                                  	.cseg
                                  	.equ	FN_SET = $28	; 4 bit-mode, 2 line, 5x8 font
@@ -1028,185 +1028,196 @@ AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm Fri
 00003a e007                      	ldi		r16, $07		; corresponds 0000 0111
 00003b b904                      	out		DDRB, r16		; which means that we configurate three LSB of PORTB as output
                                  
-00003c 940e 005e                 	call	WAIT
-00003e 940e 006d                 	call	LCD_INIT
+00003c 940e 0059                 	call	WAIT
+00003e 940e 0068                 	call	LCD_INIT
 000040 940e 00f9                 	call	TIMER_INIT
 000042 9478                      	sei
                                  	
-                                 	; initiate lcd with 23:59:45
-000043 e005                      	ldi		r16, 5
-000044 9300 0150                 	sts		$150, r16
                                  
-000046 e004                      	ldi		r16, 4
-000047 9300 0151                 	sts		$151, r16
+000043 e0f3                      	ldi		ZH, HIGH(TIME)
+000044 e0e0                      	ldi		ZL, LOW(TIME)
+                                 
+                                 	; initiate lcd with 23:59:45
+000045 e005                      	ldi		r16, 5
+000046 9301                      	st		Z+, r16
+                                 
+000047 e004                      	ldi		r16, 4
+000048 9301                      	st		Z+, r16
                                  
 000049 e009                      	ldi		r16, 9
-00004a 9300 0152                 	sts		$152, r16
+00004a 9301                      	st		Z+, r16
                                  
-00004c e005                      	ldi		r16, 5
-00004d 9300 0153                 	sts		$153, r16
+00004b e005                      	ldi		r16, 5
+00004c 9301                      	st		Z+, r16
                                  
-00004f e003                      	ldi		r16, 3
-000050 9300 0154                 	sts		$154, r16
+00004d e003                      	ldi		r16, 3
+00004e 9301                      	st		Z+, r16
                                  
-000052 e002                      	ldi		r16, 2
-000053 9300 0155                 	sts		$155, r16
+00004f e002                      	ldi		r16, 2
+000050 9301                      	st		Z+, r16
                                  
-000055 e000                      	ldi		r16, 0
-000056 9300 0156                 	sts		$156, r16
+000051 e000                      	ldi		r16, 0
+000052 9301                      	st		Z+, r16
                                  
                                  FOREVER:		; update LCD forever
-000058 940e 00e2                 	call	TIME_FORMAT
-00005a 940e 00b6                 	call	LINE_PRINT
-00005c 940c 0058                 	jmp		FOREVER
+000053 940e 00e2                 	call	TIME_FORMAT
+000055 940e 00b1                 	call	LINE_PRINT
+000057 940c 0053                 	jmp		FOREVER
                                  
                                  
                                  WAIT:
-00005e 930f                      	push	r16
-00005f 931f                      	push	r17
+000059 930f                      	push	r16
+00005a 931f                      	push	r17
                                  
-000060 e312                      	ldi		r17, 50
+00005b e312                      	ldi		r17, 50
                                  D_2:
-000061 e000                      	ldi		r16, 0
+00005c e000                      	ldi		r16, 0
                                  D_1:
-000062 950a                      	dec		r16
-000063 f7f1                      	brne	D_1
-000064 951a                      	dec		r17
-000065 f7d9                      	brne	D_2
+00005d 950a                      	dec		r16
+00005e f7f1                      	brne	D_1
+00005f 951a                      	dec		r17
+000060 f7d9                      	brne	D_2
                                  	
-000066 911f                      	pop		r17
-000067 910f                      	pop		r16
+000061 911f                      	pop		r17
+000062 910f                      	pop		r16
                                  
-000068 9508                      	ret
+000063 9508                      	ret
                                  
                                  BACKLIGHT_ON:
-000069 9a2a                      	sbi		PORTB, BLGT
-00006a 9508                      	ret
+000064 9a2a                      	sbi		PORTB, BLGT
+000065 9508                      	ret
                                  
                                  BACKLIGHT_OFF:
-00006b 982a                      	cbi		PORTB, BLGT
-00006c 9508                      	ret
+000066 982a                      	cbi		PORTB, BLGT
+000067 9508                      	ret
                                  	
                                  LCD_INIT:
-00006d 940e 0069                 	call	BACKLIGHT_ON
-00006f 940e 005e                 	call	WAIT		; wait for LCD ready
+000068 940e 0064                 	call	BACKLIGHT_ON
+00006a 940e 0059                 	call	WAIT		; wait for LCD ready
                                  
                                  	; initiate 4-bit mode
-000071 e300                      	ldi		r16, $30
-000072 940e 0088                 	call	LCD_WRITE4
-000074 940e 0088                 	call	LCD_WRITE4
-000076 940e 0088                 	call	LCD_WRITE4
+00006c e300                      	ldi		r16, $30
+00006d 940e 0083                 	call	LCD_WRITE4
+00006f 940e 0083                 	call	LCD_WRITE4
+000071 940e 0083                 	call	LCD_WRITE4
+                                 	
                                  
-000078 e200                      	ldi		r16, $20
-000079 940e 0088                 	call	LCD_WRITE4
+000073 e200                      	ldi		r16, $20
+000074 940e 0083                 	call	LCD_WRITE4
                                  
                                  	; display configuration
-00007b e208                      	ldi		r16, FN_SET		
-00007c 940e 00a2                 	call	LCD_COMMAND
+000076 e208                      	ldi		r16, FN_SET		
+000077 940e 009d                 	call	LCD_COMMAND
                                  
-00007e e00f                      	ldi		r16, DISP_ON
-00007f 940e 00a2                 	call	LCD_COMMAND
-                                 	
-000081 e001                      	ldi		r16, LCD_CLR
-000082 940e 00a2                 	call	LCD_COMMAND
+000079 e00f                      	ldi		r16, DISP_ON
+00007a 940e 009d                 	call	LCD_COMMAND
                                  
-000084 e006                      	ldi		r16, E_MODE
-000085 940e 00a2                 	call	LCD_COMMAND
+00007c e001                      	ldi		r16, LCD_CLR
+00007d 940e 009d                 	call	LCD_COMMAND
                                  
-000087 9508                      	ret
+00007f e006                      	ldi		r16, E_MODE
+000080 940e 009d                 	call	LCD_COMMAND
+                                 
+000082 9508                      	ret
                                  
                                  LCD_WRITE4:
-000088 930f                      	push	r16
+000083 930f                      	push	r16
                                  
-000089 7f00                      	andi	r16, $F0
-00008a b90b                      	out		PORTD, r16
-00008b 9a29                      	sbi		PORTB, E
+000084 7f00                      	andi	r16, $F0
+000085 b90b                      	out		PORTD, r16
+000086 9a29                      	sbi		PORTB, E
                                  	; 4 nop to make E signal being registered
-00008c 0000                      	nop
-00008d 0000                      	nop
-00008e 0000                      	nop
-00008f 0000                      	nop
-000090 9829                      	cbi		PORTB, E
-000091 940e 005e                 	call	WAIT	; waiting for LCD to handle the data (to avoid checking Busy Flag)
+000087 0000                      	nop
+000088 0000                      	nop
+000089 0000                      	nop
+00008a 0000                      	nop
+00008b 9829                      	cbi		PORTB, E
+00008c 940e 0059                 	call	WAIT	; waiting for LCD to handle the data (to avoid checking Busy Flag)
                                  
-000093 910f                      	pop		r16
-000094 9508                      	ret
+00008e 910f                      	pop		r16
+00008f 9508                      	ret
                                  
                                  LCD_WRITE8:
-000095 940e 0088                 	call	LCD_WRITE4
-000097 0f00                      	lsl		r16
-000098 0f00                      	lsl		r16
-000099 0f00                      	lsl		r16
-00009a 0f00                      	lsl		r16
-00009b 940e 0088                 	call	LCD_WRITE4
-00009d 9508                      	ret
+000090 940e 0083                 	call	LCD_WRITE4
+000092 0f00                      	lsl		r16
+000093 0f00                      	lsl		r16
+000094 0f00                      	lsl		r16
+000095 0f00                      	lsl		r16
+000096 940e 0083                 	call	LCD_WRITE4
+000098 9508                      	ret
                                  
                                  LCD_ASCII:
-00009e 9a28                      	sbi		PORTB, RS
-00009f 940e 0095                 	call	LCD_WRITE8
-0000a1 9508                      	ret
+000099 9a28                      	sbi		PORTB, RS
+00009a 940e 0090                 	call	LCD_WRITE8
+00009c 9508                      	ret
                                  
                                  LCD_COMMAND:
-0000a2 9828                      	cbi		PORTB, RS
-0000a3 940e 0095                 	call	LCD_WRITE8
-0000a5 9508                      	ret
+00009d 9828                      	cbi		PORTB, RS
+00009e 940e 0090                 	call	LCD_WRITE8
+0000a0 9508                      	ret
                                  
                                  LCD_HOME:
-0000a6 e002                      	ldi		r16, RET_HOME
-0000a7 940e 00a2                 	call	LCD_COMMAND
-0000a9 9508                      	ret
+0000a1 e002                      	ldi		r16, RET_HOME
+0000a2 940e 009d                 	call	LCD_COMMAND
+0000a4 9508                      	ret
                                  
                                  LCD_ERASE:
-0000aa e001                      	ldi		r16, LCD_CLR
-0000ab 940e 00a2                 	call	LCD_COMMAND
-0000ad 9508                      	ret
+0000a5 e001                      	ldi		r16, LCD_CLR
+0000a6 940e 009d                 	call	LCD_COMMAND
+0000a8 9508                      	ret
                                  
                                  LCD_PRINT:
                                  NEXT_CHAR:
-0000ae 9101                      	ld		r16, Z+
-0000af 3000                      	cpi		r16, 0
-0000b0 f021                      	breq	DONE
-0000b1 940e 009e                 	call	LCD_ASCII
-0000b3 940c 00ae                 	jmp		NEXT_CHAR
+0000a9 9101                      	ld		r16, Z+
+0000aa 3000                      	cpi		r16, 0
+0000ab f021                      	breq	DONE
+0000ac 940e 0099                 	call	LCD_ASCII
+0000ae 940c 00a9                 	jmp		NEXT_CHAR
                                  DONE:
-0000b5 9508                      	ret
+0000b0 9508                      	ret
                                  
                                  LINE_PRINT:
-0000b6 940e 00a6                 	call	LCD_HOME
-0000b8 e0f1                      	ldi		ZH, HIGH(LINE)
-0000b9 e0e0                      	ldi		ZL, LOW(LINE)
-0000ba 940e 00ae                 	call	LCD_PRINT
-0000bc 9508                      	ret
+0000b1 940e 00a1                 	call	LCD_HOME
+0000b3 e0f2                      	ldi		ZH, HIGH(LINE)
+0000b4 e0e0                      	ldi		ZL, LOW(LINE)
+0000b5 940e 00a9                 	call	LCD_PRINT
+0000b7 9508                      	ret
                                  
                                  TIME_TICK:
-0000bd 93ff                      	push	ZH
-0000be 93ef                      	push	ZL
+0000b8 93ff                      	push	ZH
+0000b9 93ef                      	push	ZL
                                  
-0000bf e0f1                      	ldi		ZH, HIGH(TIME)
-0000c0 e5e0                      	ldi		ZL, LOW(TIME)	; Hh:Mm:Ss => Z points to last s
+0000ba e0f3                      	ldi		ZH, HIGH(TIME)
+0000bb e0e0                      	ldi		ZL, LOW(TIME)	; sS:mM:hH => Z points to first s
                                  	
-0000c1 e010                      	ldi		r17, 0
-0000c2 e020                      	ldi		r18, $00	; bool variable that represents least significant digit for HH/MM/SS if is 00 and most otherwise.
+0000bc e010                      	ldi		r17, 0
+0000bd e020                      	ldi		r18, $00	; bool variable that represents least significant digit for HH/MM/SS if is 00 and most otherwise.
+                                 	
                                  
                                  FOR_LOOP:
-0000c3 8100                      	ld		r16, Z
-0000c4 3014                      	cpi		r17, 4
-0000c5 f051                      	breq	LSDH
-0000c6 3015                      	cpi		r17, 5
-0000c7 f029                      	breq	MSDH
-0000c8 3020                      	cpi		r18, 0
-0000c9 f449                      	brne	MSD
-0000ca 3009                      	cpi		r16, 9
-0000cb 940c 00d4                 	jmp		COMPARE_DIGIT
+0000be 8100                      	ld		r16, Z
+0000bf 3014                      	cpi		r17, 4
+0000c0 f049                      	breq	LSDH
+0000c1 3015                      	cpi		r17, 5
+0000c2 f021                      	breq	MSDH
+0000c3 3020                      	cpi		r18, 0
+0000c4 f459                      	brne	MSD
+0000c5 940c 00d3                 	jmp		LSD
                                  
                                  MSDH:		; most significant digit of hour which means we cant exceed 2
-0000cd 3002                      	cpi		r16, 2
-0000ce 940c 00d4                 	jmp		COMPARE_DIGIT
+0000c7 3002                      	cpi		r16, 2
+0000c8 940c 00d4                 	jmp		COMPARE_DIGIT
                                  LSDH:		; least significant digit of hour which means we cant exceed 3
-0000d0 3003                      	cpi		r16, 3
-0000d1 940c 00d4                 	jmp		COMPARE_DIGIT
+0000ca 8131                      	ldd		r19, Z + 1
+0000cb 3032                      	cpi		r19, 2
+0000cc f431                      	brne	LSD
+0000cd 3003                      	cpi		r16, 3
+0000ce 940c 00d4                 	jmp		COMPARE_DIGIT
                                  MSD:		; most significant digit which means we cant exceed 5
-0000d3 3005                      	cpi		r16, 5
+0000d0 3005                      	cpi		r16, 5
+0000d1 940c 00d4                 	jmp		COMPARE_DIGIT
+                                 LSD:		; least significant digit which means we cant exceed 9
+0000d3 3009                      	cpi		r16, 9
                                  
                                  COMPARE_DIGIT:	; compare and branch if needed
 0000d4 f021                      	breq	INC_NEXT_DIGIT
@@ -1220,7 +1231,7 @@ AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm Fri
 0000db 9301                      	st		Z+, r16
 0000dc 9513                      	inc		r17
 0000dd 3016                      	cpi		r17, 6
-0000de f721                      	brne	FOR_LOOP
+0000de f6f9                      	brne	FOR_LOOP
                                  
                                  END:
 0000df 91ef                      	pop		ZL
@@ -1228,10 +1239,10 @@ AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm Fri
 0000e1 9508                      	ret
                                  
                                  TIME_FORMAT:
-0000e2 e0f1                      	ldi		ZH, HIGH(TIME)
-0000e3 e5e0                      	ldi		ZL, LOW(TIME)
+0000e2 e0f3                      	ldi		ZH, HIGH(TIME)
+0000e3 e0e0                      	ldi		ZL, LOW(TIME)
                                  
-0000e4 e0d1                      	ldi		YH, HIGH(LINE+7)
+0000e4 e0d2                      	ldi		YH, HIGH(LINE+7)
 0000e5 e0c7                      	ldi		YL, LOW(LINE+7)
                                  
                                  	; TIME:
@@ -1285,7 +1296,7 @@ AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3\Lab3\main.asm Fri
 00010b b70f                      	in		r16, SREG
 00010c 930f                      	push	r16
                                  
-00010d 940e 00bd                 	call	TIME_TICK
+00010d 940e 00b8                 	call	TIME_TICK
                                  
 00010f 910f                      	pop		r16
 000110 bf0f                      	out		SREG, r16
@@ -1312,40 +1323,40 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega328P" register use summary:
-x  :   0 y  :   5 z  :   5 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
+x  :   0 y  :   5 z  :  13 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  74 r17:  13 r18:   5 r19:   0 r20:   0 
+r13:   0 r14:   0 r15:   0 r16:  74 r17:  13 r18:   5 r19:   2 r20:   0 
 r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   3 
-r29:   3 r30:   7 r31:   7 
-Registers used: 9 out of 35 (25.7%)
+r29:   3 r30:   8 r31:   8 
+Registers used: 10 out of 35 (28.6%)
 
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
 andi  :   1 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   1 brcs  :   0 break :   0 breq  :   5 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   4 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :   5 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :  26 cbi   :   3 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   1 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   1 cp    :   0 cpc   :   0 
-cpi   :  10 cpse  :   0 dec   :   3 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   1 inc   :   2 jmp   :   9 
-ld    :   3 ldd   :   0 ldi   :  38 lds   :   0 lpm   :   0 lsl   :   4 
+cpi   :  11 cpse  :   0 dec   :   3 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   1 inc   :   2 jmp   :  10 
+ld    :   3 ldd   :   1 ldi   :  40 lds   :   0 lpm   :   0 lsl   :   4 
 lsr   :   1 mov   :   1 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   4 or    :   0 ori   :   1 out   :   6 pop   :  11 
 push  :  11 rcall :   0 ret   :  15 reti  :   1 rjmp  :   0 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   3 sbic  :   0 sbis  :   0 
 sbiw  :   2 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
-sez   :   0 sleep :   0 spm   :   0 st    :   4 std   :   1 sts   :  11 
+sez   :   0 sleep :   0 spm   :   0 st    :  11 std   :   1 sts   :   4 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 31 out of 113 (27.4%)
+Instructions used: 32 out of 113 (28.3%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
 [.cseg] 0x000000 0x00022e    462      0    462   32768   1.4%
-[.dseg] 0x000100 0x000157      0     16     16    2048   0.8%
+[.dseg] 0x000100 0x000307      0     16     16    2048   0.8%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 
 Assembly complete, 0 errors, 0 warnings

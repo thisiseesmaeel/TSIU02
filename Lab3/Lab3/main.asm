@@ -2,11 +2,11 @@
 ; Lab3.asm
 ;
 	.dseg
-	.org	$100
+	.org	$200
 LINE:
 	.byte	9
 
-	.org	$150
+	.org	$300
 TIME:
 	.byte	7
 
@@ -47,27 +47,31 @@ MAIN:
 	call	TIMER_INIT
 	sei
 	
+
+	ldi		ZH, HIGH(TIME)
+	ldi		ZL, LOW(TIME)
+
 	; initiate lcd with 23:59:45
 	ldi		r16, 5
-	sts		$150, r16
+	st		Z+, r16
 
 	ldi		r16, 4
-	sts		$151, r16
+	st		Z+, r16
 
 	ldi		r16, 9
-	sts		$152, r16
+	st		Z+, r16
 
 	ldi		r16, 5
-	sts		$153, r16
+	st		Z+, r16
 
 	ldi		r16, 3
-	sts		$154, r16
+	st		Z+, r16
 
 	ldi		r16, 2
-	sts		$155, r16
+	st		Z+, r16
 
 	ldi		r16, 0
-	sts		$156, r16
+	st		Z+, r16
 
 FOREVER:		; update LCD forever
 	call	TIME_FORMAT
@@ -110,6 +114,7 @@ LCD_INIT:
 	call	LCD_WRITE4
 	call	LCD_WRITE4
 	call	LCD_WRITE4
+	
 
 	ldi		r16, $20
 	call	LCD_WRITE4
@@ -120,7 +125,7 @@ LCD_INIT:
 
 	ldi		r16, DISP_ON
 	call	LCD_COMMAND
-	
+
 	ldi		r16, LCD_CLR
 	call	LCD_COMMAND
 
@@ -197,10 +202,11 @@ TIME_TICK:
 	push	ZL
 
 	ldi		ZH, HIGH(TIME)
-	ldi		ZL, LOW(TIME)	; Hh:Mm:Ss => Z points to last s
+	ldi		ZL, LOW(TIME)	; sS:mM:hH => Z points to first s
 	
 	ldi		r17, 0
 	ldi		r18, $00	; bool variable that represents least significant digit for HH/MM/SS if is 00 and most otherwise.
+	
 
 FOR_LOOP:
 	ld		r16, Z
@@ -210,17 +216,22 @@ FOR_LOOP:
 	breq	MSDH
 	cpi		r18, 0
 	brne	MSD
-	cpi		r16, 9
-	jmp		COMPARE_DIGIT
+	jmp		LSD
 
 MSDH:		; most significant digit of hour which means we cant exceed 2
 	cpi		r16, 2
 	jmp		COMPARE_DIGIT
 LSDH:		; least significant digit of hour which means we cant exceed 3
+	ldd		r19, Z + 1
+	cpi		r19, 2
+	brne	LSD
 	cpi		r16, 3
 	jmp		COMPARE_DIGIT
 MSD:		; most significant digit which means we cant exceed 5
 	cpi		r16, 5
+	jmp		COMPARE_DIGIT
+LSD:		; least significant digit which means we cant exceed 9
+	cpi		r16, 9
 
 COMPARE_DIGIT:	; compare and branch if needed
 	breq	INC_NEXT_DIGIT
