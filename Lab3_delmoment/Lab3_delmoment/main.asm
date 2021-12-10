@@ -7,7 +7,7 @@
 	.dseg
 	.org	$100
 LINE:
-	.byte	7
+	.byte	9
 
 	.org	$150
 TIME:
@@ -19,14 +19,18 @@ TIME:
 	.equ	DISP_ON = $0F
 	.equ	LCD_CLR = $01
 	.equ	E_MODE = $06
+	.equ	RET_HOME = $02
 
 	.equ	RS = 0
 	.equ	E = 1
 	.equ	BLGT = 2
-	
+	.equ	SECOND_TICKS = 62500 - 1
 	
 	.org	$0000
 	jmp		MAIN
+
+	.org	OC1Aaddr
+	jmp		SECOND_INTERRUPT
 
 	.org	INT_VECTORS_SIZE
 
@@ -45,28 +49,7 @@ MAIN:
 
 	call	WAIT
 	call	LCD_INIT
-
-	/*
-	ldi		r16, $41
-	sts		$100, r16
-
-	ldi		r16, $42
-	sts		$101, r16
-
-	ldi		r16, $43
-	sts		$102, r16
-
-	ldi		r16, $44
-	sts		$103, r16
-
-	ldi		r16, $45
-	sts		$104, r16
-
-	ldi		r16, $00
-	sts		$105, r16
-
-	call	LINE_PRINT
-	*/
+	
 	
 	ldi		r16, 9
 	sts		$150, r16
@@ -90,13 +73,12 @@ MAIN:
 	sts		$156, r16
 
 	; 20:59:59
-
-	call	TIME_FORMAT
-	call	LINE_PRINT
+	call	TIMER_INIT
+	sei
 	
-
-STOP:
-	jmp		STOP
+FOREVER:
+	
+	jmp		FOREVER
 
 
 	; For ATMEGA326 with clock frequency of 16 MHz WAIT takes
@@ -198,7 +180,7 @@ LCD_COMMAND:
 
 	
 LCD_HOME:
-	ldi		r16, LCD_CLR
+	ldi		r16, RET_HOME
 	call	LCD_COMMAND
 	ret
 
@@ -226,14 +208,11 @@ LINE_PRINT:
 
 TIME_TICK:
 	ldi		ZH, HIGH(TIME)
-	ldi		ZL, LOW(TIME)
-
-	; HH:MM:SS         => Z points to last S
-
+	ldi		ZL, LOW(TIME)	; Hh:Mm:Ss => Z points to last s
+	
 	ldi		r17, 0
 	ldi		r18, $00	; bool variable that represents least significant digit for HH/MM/SS if is 00 and most otherwise.
 
-	; 00:00:50
 FOR_LOOP:
 	ld		r16, Z
 	cpi		r17, 4
@@ -276,8 +255,8 @@ TIME_FORMAT:
 	ldi		ZH, HIGH(TIME)
 	ldi		ZL, LOW(TIME)
 
-	ldi		YH, HIGH(LINE+5)
-	ldi		YL, LOW(LINE+5)
+	ldi		YH, HIGH(LINE+7)
+	ldi		YL, LOW(LINE+7)
 
 	; TIME:
 	; sS:mM:hH 0
@@ -288,23 +267,49 @@ TIME_FORMAT:
 
 CONVERT:
 	ld		r16, Z+
-	cpi		r17, 0
-	breq	DONE_CONVERT
-	; r16 0000 0001
-	;	  0011 0000
-	;	  ---------
-	;	  0011 0001
-
-	ori		r16, $30 ; Convert from binary to ASCII 
 	
+	mov		r18, r17
+	
+	ori		r16, $30 ; Converts from binary to ASCII 
 	st		Y, r16
 	sbiw	Y, 1
+	cpi		r17, 1
+	breq	DONE_CONVERT
+
+	lsr		r18
+	brcc	EVEN
+	ldi		r16, $3A ; represent ':'
+	st		Y, r16
+	sbiw	Y, 1
+EVEN:
 	dec		r17
 	jmp		CONVERT
 
-
-
-
 DONE_CONVERT:
-	std		Y + 7, r16
+	ldi		r16, $00
+	std		Y + 9, r16
 	ret
+
+
+TIMER_INIT:
+	ldi		r16, (1<<WGM12) | (1<<CS12)
+	sts		TCCR1B, r16
+	ldi		r16, HIGH(SECOND_TICKS)
+	sts		OCR1AH, r16
+	ldi		r16, LOW(SECOND_TICKS)
+	sts		OCR1AL, r16
+	ldi		r16,(1<<OCIE1A)
+	sts		TIMSK1, r16
+	ret
+
+SECOND_INTERRUPT:
+	push	r16
+	in		r16, SREG
+
+	call	TIME_TICK
+	call	TIME_FORMAT
+	call	LINE_PRINTcd
+
+	out		SREG, r16
+	pop		r16
+	reti

@@ -1,18 +1,18 @@
 <ASSEMBLER_INFO>
  <VERSION>2.2.8</VERSION>
  <DEVICE>"ATmega328P"</DEVICE>
- <WORKING_DIR>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\Debug</WORKING_DIR>
+ <WORKING_DIR>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\Debug</WORKING_DIR>
  <INCLUDE_PATH>
   <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc</DIR>
   <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
   <DIR></DIR>
  </INCLUDE_PATH>
- <SOURCE_FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</SOURCE_FILE>
+ <SOURCE_FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</SOURCE_FILE>
  <INCLUDED_FILES>
   <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc</FILE>
  </INCLUDED_FILES>
  <OBJECT_FILES>
-  <FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\Debug\Lab3_delmoment.obj</FILE>
+  <FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\Debug\Lab3_delmoment.obj</FILE>
  </OBJECT_FILES>
  <HEX_FILES>
   <FILE>Lab3_delmoment.hex</FILE>
@@ -22,37 +22,40 @@
   <FILE>Lab3_delmoment.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <LINE><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>9</LINE></LINE>
-  <TIME><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>13</LINE></TIME>
-  <MAIN><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>33</LINE></MAIN>
-  <WAIT><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>104</LINE></WAIT>
-  <LCD_INIT><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>137</LINE></LCD_INIT>
-  <TIME_FORMAT><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>275</LINE></TIME_FORMAT>
-  <LINE_PRINT><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>220</LINE></LINE_PRINT>
-  <STOP><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>98</LINE></STOP>
-  <D_3><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>110</LINE></D_3>
-  <D_2><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>112</LINE></D_2>
-  <D_1><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>114</LINE></D_1>
-  <BACKLIGHT_ON><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>129</LINE></BACKLIGHT_ON>
-  <BACKLIGHT_OFF><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>133</LINE></BACKLIGHT_OFF>
-  <LCD_WRITE4><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>164</LINE></LCD_WRITE4>
-  <LCD_COMMAND><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>194</LINE></LCD_COMMAND>
-  <LCD_WRITE8><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>180</LINE></LCD_WRITE8>
-  <LCD_ASCII><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>189</LINE></LCD_ASCII>
-  <LCD_HOME><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>200</LINE></LCD_HOME>
-  <LCD_ERASE><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>205</LINE></LCD_ERASE>
-  <LCD_PRINT><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>210</LINE></LCD_PRINT>
-  <AGAIN><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>211</LINE></AGAIN>
-  <DONE><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>217</LINE></DONE>
-  <TIME_TICK><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>227</LINE></TIME_TICK>
-  <FOR_LOOP><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>237</LINE></FOR_LOOP>
-  <LSDH><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>251</LINE></LSDH>
-  <MSDH><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>248</LINE></MSDH>
-  <MSD><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>254</LINE></MSD>
-  <BLABLA><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>257</LINE></BLABLA>
-  <INC_NEXT><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>263</LINE></INC_NEXT>
-  <END><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>272</LINE></END>
-  <CONVERT><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>289</LINE></CONVERT>
-  <DONE_CONVERT><FILE>C:\Users\hadia\Documents\Atmel Studio\7.0\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>308</LINE></DONE_CONVERT>
+  <LINE><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>9</LINE></LINE>
+  <TIME><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>13</LINE></TIME>
+  <MAIN><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>37</LINE></MAIN>
+  <SECOND_INTERRUPT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>306</LINE></SECOND_INTERRUPT>
+  <WAIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>87</LINE></WAIT>
+  <LCD_INIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>120</LINE></LCD_INIT>
+  <TIMER_INIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>295</LINE></TIMER_INIT>
+  <FOREVER><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>79</LINE></FOREVER>
+  <TIME_FORMAT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>255</LINE></TIME_FORMAT>
+  <LINE_PRINT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>203</LINE></LINE_PRINT>
+  <D_3><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>93</LINE></D_3>
+  <D_2><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>95</LINE></D_2>
+  <D_1><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>97</LINE></D_1>
+  <BACKLIGHT_ON><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>112</LINE></BACKLIGHT_ON>
+  <BACKLIGHT_OFF><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>116</LINE></BACKLIGHT_OFF>
+  <LCD_WRITE4><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>147</LINE></LCD_WRITE4>
+  <LCD_COMMAND><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>177</LINE></LCD_COMMAND>
+  <LCD_WRITE8><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>163</LINE></LCD_WRITE8>
+  <LCD_ASCII><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>172</LINE></LCD_ASCII>
+  <LCD_HOME><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>183</LINE></LCD_HOME>
+  <LCD_ERASE><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>188</LINE></LCD_ERASE>
+  <LCD_PRINT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>193</LINE></LCD_PRINT>
+  <AGAIN><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>194</LINE></AGAIN>
+  <DONE><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>200</LINE></DONE>
+  <TIME_TICK><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>210</LINE></TIME_TICK>
+  <FOR_LOOP><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>217</LINE></FOR_LOOP>
+  <LSDH><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>231</LINE></LSDH>
+  <MSDH><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>228</LINE></MSDH>
+  <MSD><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>234</LINE></MSD>
+  <BLABLA><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>237</LINE></BLABLA>
+  <INC_NEXT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>243</LINE></INC_NEXT>
+  <END><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>252</LINE></END>
+  <CONVERT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>269</LINE></CONVERT>
+  <DONE_CONVERT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>289</LINE></DONE_CONVERT>
+  <EVEN><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab3_delmoment\Lab3_delmoment\main.asm</FILE><LINE>285</LINE></EVEN>
  </LABELS>
 </ASSEMBLER_INFO>
