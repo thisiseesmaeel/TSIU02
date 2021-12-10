@@ -1,9 +1,6 @@
 ;
 ; Lab3.asm
 ;
-; Created: 08/12/2021 20:52:19
-; Author : hadia
-;
 	.dseg
 	.org	$100
 LINE:
@@ -14,17 +11,16 @@ TIME:
 	.byte	7
 
 	.cseg
+	.equ	FN_SET = $28	; 4 bit-mode, 2 line, 5x8 font
+	.equ	DISP_ON = $0F	; display on, cursor on, cursor blink
+	.equ	LCD_CLR = $01	; clear display
+	.equ	E_MODE = $06	; entry mode: increment cursor, no shift
+	.equ	RET_HOME = $02	; return cursor to first column of LCD
 
-	.equ	FN_SET = $28
-	.equ	DISP_ON = $0F
-	.equ	LCD_CLR = $01
-	.equ	E_MODE = $06
-	.equ	RET_HOME = $02
-
-	.equ	RS = 0
-	.equ	E = 1
-	.equ	BLGT = 2
-	.equ	SECOND_TICKS = 62500 - 1
+	.equ	RS = 0			; register select bit
+	.equ	E = 1			; E signal bit
+	.equ	BLGT = 2		; Backlight bit
+	.equ	SECOND_TICKS = 62500 - 1	; correspond 1 second for ATMEGA328p
 	
 	.org	$0000
 	jmp		MAIN
@@ -33,7 +29,6 @@ TIME:
 	jmp		SECOND_INTERRUPT
 
 	.org	INT_VECTORS_SIZE
-
 MAIN:
 	; initiate the stack
 	ldi		r16, HIGH(RAMEND)
@@ -41,22 +36,22 @@ MAIN:
 	ldi		r16, LOW(RAMEND)
 	out		SPL, r16
 	
-	ldi		r16, $F0		; Corresponds 1111 0000
+	ldi		r16, $F0		; corresponds 1111 0000
 	out		DDRD, r16		; which means that we configurate MSB in PORTD as output
 	
-	ldi		r16, $07		; Corresponds 0000 0111
+	ldi		r16, $07		; corresponds 0000 0111
 	out		DDRB, r16		; which means that we configurate three LSB of PORTB as output
 
 	call	WAIT
 	call	LCD_INIT
+	call	TIMER_INIT
+	sei
 	
-	ldi		r16, 9
-	sts		$150, r16
-
-	ldi		r16, 9
-	sts		$150, r16
-
+	; initiate lcd with 23:59:45
 	ldi		r16, 5
+	sts		$150, r16
+
+	ldi		r16, 4
 	sts		$151, r16
 
 	ldi		r16, 9
@@ -65,7 +60,7 @@ MAIN:
 	ldi		r16, 5
 	sts		$153, r16
 
-	ldi		r16, 0
+	ldi		r16, 3
 	sts		$154, r16
 
 	ldi		r16, 2
@@ -74,11 +69,7 @@ MAIN:
 	ldi		r16, 0
 	sts		$156, r16
 
-	; 20:59:59
-	call	TIMER_INIT
-	sei
-	
-FOREVER:
+FOREVER:		; update LCD forever
 	call	TIME_FORMAT
 	call	LINE_PRINT
 	jmp		FOREVER
@@ -112,8 +103,9 @@ BACKLIGHT_OFF:
 	
 LCD_INIT:
 	call	BACKLIGHT_ON
-	call	WAIT
+	call	WAIT		; wait for LCD ready
 
+	; initiate 4-bit mode
 	ldi		r16, $30
 	call	LCD_WRITE4
 	call	LCD_WRITE4
@@ -122,8 +114,8 @@ LCD_INIT:
 	ldi		r16, $20
 	call	LCD_WRITE4
 
-	; Display configuration
-	ldi		r16, FN_SET
+	; display configuration
+	ldi		r16, FN_SET		
 	call	LCD_COMMAND
 
 	ldi		r16, DISP_ON
@@ -143,12 +135,13 @@ LCD_WRITE4:
 	andi	r16, $F0
 	out		PORTD, r16
 	sbi		PORTB, E
+	; 4 nop to make E signal being registered
 	nop
 	nop
 	nop
 	nop
 	cbi		PORTB, E
-	call	WAIT
+	call	WAIT	; waiting for LCD to handle the data (to avoid checking Busy Flag)
 
 	pop		r16
 	ret
@@ -172,7 +165,6 @@ LCD_COMMAND:
 	call	LCD_WRITE8
 	ret
 
-	
 LCD_HOME:
 	ldi		r16, RET_HOME
 	call	LCD_COMMAND
@@ -184,12 +176,12 @@ LCD_ERASE:
 	ret
 
 LCD_PRINT:
-AGAIN:
+NEXT_CHAR:
 	ld		r16, Z+
 	cpi		r16, 0
 	breq	DONE
 	call	LCD_ASCII
-	jmp		AGAIN
+	jmp		NEXT_CHAR
 DONE:
 	ret
 
@@ -219,31 +211,30 @@ FOR_LOOP:
 	cpi		r18, 0
 	brne	MSD
 	cpi		r16, 9
-	jmp		BLABLA
+	jmp		COMPARE_DIGIT
 
-MSDH:
+MSDH:		; most significant digit of hour which means we cant exceed 2
 	cpi		r16, 2
-	jmp		BLABLA
-LSDH:
+	jmp		COMPARE_DIGIT
+LSDH:		; least significant digit of hour which means we cant exceed 3
 	cpi		r16, 3
-	jmp		BLABLA
-MSD:
+	jmp		COMPARE_DIGIT
+MSD:		; most significant digit which means we cant exceed 5
 	cpi		r16, 5
 
-BLABLA:
-	breq	INC_NEXT
+COMPARE_DIGIT:	; compare and branch if needed
+	breq	INC_NEXT_DIGIT
 	inc		r16
 	st		Z, r16
 	jmp		END
 
-INC_NEXT:
+INC_NEXT_DIGIT:	; increment next digit in Hh:Mm:Ss format if max digit allowed for digit is exceeded
 	com		r18
 	clr		r16
 	st		Z+, r16
 	inc		r17
 	cpi		r17, 6
 	brne	FOR_LOOP
-
 
 END:
 	pop		ZL
@@ -266,15 +257,12 @@ TIME_FORMAT:
 
 CONVERT:
 	ld		r16, Z+
-	
 	mov		r18, r17
-	
 	ori		r16, $30 ; Converts from binary to ASCII 
 	st		Y, r16
 	sbiw	Y, 1
 	cpi		r17, 1
 	breq	DONE_CONVERT
-
 	lsr		r18
 	brcc	EVEN
 	ldi		r16, $3A ; represent ':'
@@ -303,8 +291,6 @@ TIMER_INIT:
 
 SECOND_INTERRUPT:
 	push	r16
-	push	r17
-	push	r18
 	push	ZH
 	push	ZL
 	push	YH
@@ -322,7 +308,5 @@ SECOND_INTERRUPT:
 	pop		YH
 	pop		ZL
 	pop		ZH
-	pop		r18
-	pop		r17
 	pop		r16
 	reti
