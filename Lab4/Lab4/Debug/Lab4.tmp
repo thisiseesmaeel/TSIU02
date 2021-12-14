@@ -23,16 +23,37 @@
  </OUTPUT_FILES>
  <LABELS>
   <LINE><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>9</LINE></LINE>
-  <MAIN><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>29</LINE></MAIN>
-  <STOP><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>31</LINE></STOP>
-  <WAIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>35</LINE></WAIT>
-  <D_2><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>40</LINE></D_2>
-  <D_1><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>42</LINE></D_1>
-  <LCD_WRITE4><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>54</LINE></LCD_WRITE4>
-  <LCD_WRITE8><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>71</LINE></LCD_WRITE8>
-  <LCD_ASCII><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>80</LINE></LCD_ASCII>
-  <LCD_COMMAND><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>85</LINE></LCD_COMMAND>
-  <LCD_HOME><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>90</LINE></LCD_HOME>
-  <LCD_ERASE><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>95</LINE></LCD_ERASE>
+  <MAIN><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>36</LINE></MAIN>
+  <PORT_INIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>52</LINE></PORT_INIT>
+  <WAIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>98</LINE></WAIT>
+  <LCD_INIT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>69</LINE></LCD_INIT>
+  <BLABLA><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>47</LINE></BLABLA>
+  <KEY_READ><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>234</LINE></KEY_READ>
+  <LCD_COL><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>247</LINE></LCD_COL>
+  <BACKLIGHT_ON><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>61</LINE></BACKLIGHT_ON>
+  <BACKLIGHT_OFF><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>65</LINE></BACKLIGHT_OFF>
+  <LCD_WRITE4><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>117</LINE></LCD_WRITE4>
+  <LCD_COMMAND><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>145</LINE></LCD_COMMAND>
+  <D_2><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>103</LINE></D_2>
+  <D_1><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>105</LINE></D_1>
+  <LCD_WRITE8><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>134</LINE></LCD_WRITE8>
+  <LCD_ASCII><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>140</LINE></LCD_ASCII>
+  <LCD_HOME><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>150</LINE></LCD_HOME>
+  <LCD_ERASE><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>155</LINE></LCD_ERASE>
+  <ADC_READ8><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>161</LINE></ADC_READ8>
+  <CONVERT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>169</LINE></CONVERT>
+  <ADC_BUSY><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>174</LINE></ADC_BUSY>
+  <LCD_PRINT_HEX><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>184</LINE></LCD_PRINT_HEX>
+  <NIB2HEX><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>187</LINE></NIB2HEX>
+  <NOT_AF><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>195</LINE></NOT_AF>
+  <KEY><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>200</LINE></KEY>
+  <RIGHT_BUTTON><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>215</LINE></RIGHT_BUTTON>
+  <UP_BUTTON><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>218</LINE></UP_BUTTON>
+  <DOWN_BUTTON><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>221</LINE></DOWN_BUTTON>
+  <LEFT_BUTTON><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>224</LINE></LEFT_BUTTON>
+  <SELECT_BUTTON><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>227</LINE></SELECT_BUTTON>
+  <DONE><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>231</LINE></DONE>
+  <KEY_WAIT_FOR_PRESS><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>239</LINE></KEY_WAIT_FOR_PRESS>
+  <SHIFT><FILE>C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm</FILE><LINE>250</LINE></SHIFT>
  </LABELS>
 </ASSEMBLER_INFO>

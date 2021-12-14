@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm Tue Dec 14 12:42:12 2021
+AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm Tue Dec 14 18:24:31 2021
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
@@ -995,93 +995,259 @@ AVRASM ver. 2.2.8  C:\Users\hadia\Skrivbord\TSIU02\Labbar\Lab4\Lab4\main.asm Tue
                                  LINE:
 000200                           	.byte	16 + 1
                                  
-                                 
                                  	.cseg
                                  	.equ	FN_SET = $28	; 4 bit-mode, 2 line, 5x8 font
                                  	.equ	DISP_ON = $0F	; display on, cursor on, cursor blink
                                  	.equ	LCD_CLR = $01	; clear display
                                  	.equ	E_MODE = $06	; entry mode: increment cursor, no shift
                                  	.equ	RET_HOME = $02	; return cursor to first column of LCD
+                                 	.equ	CURSOR_RIGHT_SHIFT = $14	; Shifts the cursor position to the right. (AC is incremented by one.)
                                  
-                                 	.equ	RS = 0			; register select bit
-                                 	.equ	E = 1			; E signal bit
-                                 	.equ	BLGT = 2		; Backlight bit
-                                 	.equ	SECOND_TICKS = 62500 - 1	; correspond 1 second for ATMEGA328p
+                                 	.equ	RS = PB0		; register select bit
+                                 	.equ	E = PB1			; E signal bit
+                                 	.equ	BLGT = PB2		; Backlight bit
+                                 
+                                 	.equ	NULL = 0
+                                 	.equ	SELECT = 1
+                                 	.equ	LEFT = 2
+                                 	.equ	DOWN = 3
+                                 	.equ	UP = 4
+                                 	.equ	RIGHT = 5
+                                 
                                  	
                                  	.org	$0000
 000000 940c 0034                 	jmp		MAIN
                                  
                                  	.org	INT_VECTORS_SIZE
                                  MAIN:
-000034 e002                      	ldi		r16, 2
-                                 STOP:
-000035 940c 0035                 	jmp		STOP
+                                 	; initiate stack
+000034 e008                      	ldi		r16, HIGH(RAMEND)
+000035 bf0e                      	out		SPH, r16
+000036 ef0f                      	ldi		r16, LOW(RAMEND)
+000037 bf0d                      	out		SPL, r16
+                                 	
+000038 940e 0044                 	call	PORT_INIT
+00003a 940e 0068                 	call	WAIT
+00003c 940e 004d                 	call	LCD_INIT	
                                  
+                                 BLABLA:
+00003e 940e 00d5                 	call	KEY_READ
+000040 940e 00e0                 	call	LCD_COL
+000042 940c 003e                 	jmp		BLABLA
+                                 
+                                 PORT_INIT:
+000044 ef00                      	ldi		r16, $F0		; corresponds 1111 0000
+000045 b90a                      	out		DDRD, r16		; which means that we configurate MSB in PORTD as output
+                                 	
+000046 e007                      	ldi		r16, $07		; corresponds 0000 0111
+000047 b904                      	out		DDRB, r16		; which means that we configurate three LSB of PORTB as output
+                                 
+000048 9508                      	ret
+                                 
+                                 BACKLIGHT_ON:
+000049 9a2a                      	sbi		PORTB, BLGT
+00004a 9508                      	ret
+                                 
+                                 BACKLIGHT_OFF:
+00004b 982a                      	cbi		PORTB, BLGT
+00004c 9508                      	ret
+                                 
+                                 LCD_INIT:
+00004d 940e 0049                 	call	BACKLIGHT_ON
+00004f 940e 0068                 	call	WAIT		; wait for LCD ready
+                                 
+                                 	; initiate 4-bit mode
+000051 e300                      	ldi		r16, $30
+000052 940e 0073                 	call	LCD_WRITE4
+000054 940e 0073                 	call	LCD_WRITE4
+000056 940e 0073                 	call	LCD_WRITE4
+                                 	
+                                 
+000058 e200                      	ldi		r16, $20
+000059 940e 0073                 	call	LCD_WRITE4
+                                 
+                                 	; display configuration
+00005b e208                      	ldi		r16, FN_SET		
+00005c 940e 008a                 	call	LCD_COMMAND
+                                 
+00005e e00f                      	ldi		r16, DISP_ON
+00005f 940e 008a                 	call	LCD_COMMAND
+                                 
+000061 e001                      	ldi		r16, LCD_CLR
+000062 940e 008a                 	call	LCD_COMMAND
+                                 
+000064 e006                      	ldi		r16, E_MODE
+000065 940e 008a                 	call	LCD_COMMAND
+                                 
+000067 9508                      	ret
                                  
                                  WAIT:
-000037 930f                      	push	r16
-000038 931f                      	push	r17
+000068 930f                      	push	r16
+000069 931f                      	push	r17
                                  
-000039 e312                      	ldi		r17, 50
+00006a e312                      	ldi		r17, 50
                                  D_2:
-00003a e000                      	ldi		r16, 0
+00006b e000                      	ldi		r16, 0
                                  D_1:
-00003b 950a                      	dec		r16
-00003c f7f1                      	brne	D_1
-00003d 951a                      	dec		r17
-00003e f7d9                      	brne	D_2
+00006c 950a                      	dec		r16
+00006d f7f1                      	brne	D_1
+00006e 951a                      	dec		r17
+00006f f7d9                      	brne	D_2
                                  	
-00003f 911f                      	pop		r17
-000040 910f                      	pop		r16
+000070 911f                      	pop		r17
+000071 910f                      	pop		r16
                                  
-000041 9508                      	ret
+000072 9508                      	ret
                                  
                                  
                                  LCD_WRITE4:
-000042 930f                      	push	r16
+000073 930f                      	push	r16
                                  
-000043 7f00                      	andi	r16, $F0
-000044 b90b                      	out		PORTD, r16
-000045 9a29                      	sbi		PORTB, E
+000074 7f00                      	andi	r16, $F0
+000075 b90b                      	out		PORTD, r16
+000076 9a29                      	sbi		PORTB, E
                                  	; 4 nop to make E signal being registered
-000046 0000                      	nop
-000047 0000                      	nop
-000048 0000                      	nop
-000049 0000                      	nop
-00004a 9829                      	cbi		PORTB, E
-00004b 940e 0037                 	call	WAIT	; waiting for LCD to handle the data (to avoid checking Busy Flag)
+000077 0000                      	nop
+000078 0000                      	nop
+000079 0000                      	nop
+00007a 0000                      	nop
+00007b 9829                      	cbi		PORTB, E
+00007c 940e 0068                 	call	WAIT	; waiting for LCD to handle the data (to avoid checking Busy Flag)
                                  
-00004d 910f                      	pop		r16
-00004e 9508                      	ret
+00007e 910f                      	pop		r16
+00007f 9508                      	ret
                                  
                                  LCD_WRITE8:
-00004f 940e 0042                 	call	LCD_WRITE4
-000051 0f00                      	lsl		r16
-000052 0f00                      	lsl		r16
-000053 0f00                      	lsl		r16
-000054 0f00                      	lsl		r16
-000055 940e 0042                 	call	LCD_WRITE4
-000057 9508                      	ret
+000080 940e 0073                 	call	LCD_WRITE4
+000082 9502                      	swap	r16
+000083 940e 0073                 	call	LCD_WRITE4
+000085 9508                      	ret
                                  
                                  LCD_ASCII:
-000058 9a28                      	sbi		PORTB, RS
-000059 940e 004f                 	call	LCD_WRITE8
-00005b 9508                      	ret
+000086 9a28                      	sbi		PORTB, RS
+000087 940e 0080                 	call	LCD_WRITE8
+000089 9508                      	ret
                                  
                                  LCD_COMMAND:
-00005c 9828                      	cbi		PORTB, RS
-00005d 940e 004f                 	call	LCD_WRITE8
-00005f 9508                      	ret
+00008a 9828                      	cbi		PORTB, RS
+00008b 940e 0080                 	call	LCD_WRITE8
+00008d 9508                      	ret
                                  
                                  LCD_HOME:
-000060 e002                      	ldi		r16, RET_HOME
-000061 940e 005c                 	call	LCD_COMMAND
-000063 9508                      	ret
+00008e e002                      	ldi		r16, RET_HOME
+00008f 940e 008a                 	call	LCD_COMMAND
+000091 9508                      	ret
                                  
                                  LCD_ERASE:
-000064 e001                      	ldi		r16, LCD_CLR
-000065 940e 005c                 	call	LCD_COMMAND
-000067 9508                      	ret
+000092 e001                      	ldi		r16, LCD_CLR
+000093 940e 008a                 	call	LCD_COMMAND
+000095 9508                      	ret
+                                 
+                                 
+                                 ADC_READ8:
+                                 	; Configuration
+000096 e600                      	ldi		r16, (1<<REFS0)|(1<<ADLAR)|0
+000097 9300 007c                 	sts		ADMUX, r16
+000099 e807                      	ldi		r16, (1<<ADEN)| 7
+00009a 9300 007a                 	sts		ADCSRA, r16
+                                 
+                                 	; Start ADC
+                                 CONVERT:
+00009c 9100 007a                 	lds		r16, ADCSRA
+00009e 6400                      	ori		r16, (1<<ADSC)
+00009f 9300 007a                 	sts		ADCSRA, r16
+                                 
+                                 ADC_BUSY:
+0000a1 9100 007a                 	lds		r16, ADCSRA
+0000a3 fd06                      	sbrc	r16, ADSC
+0000a4 940c 00a1                 	jmp		ADC_BUSY
+0000a6 9100 0079                 	lds		r16, ADCH
+                                 
+0000a8 9508                      	ret
+                                 
+                                 ; Write hexadecimal ; In: r16, value
+                                 ; Out: -
+                                 LCD_PRINT_HEX:
+0000a9 940e 00ab                 	call NIB2HEX
+                                 
+                                 NIB2HEX:
+0000ab 9502                      	swap r16
+0000ac 930f                      	push r16
+0000ad 700f                      	andi r16,$0F
+0000ae 6300                      	ori r16,$30
+0000af 330a                      	cpi r16,':'
+0000b0 f008                      	brlo NOT_AF
+0000b1 5f09                      	subi r16,-$07
+                                 NOT_AF:
+0000b2 940e 0086                 	call LCD_ASCII
+0000b4 910f                      	pop r16
+0000b5 9508                      	ret
+                                 
+                                 KEY:
+0000b6 940e 0096                 	call	ADC_READ8
+0000b8 300c                      	cpi		r16, 12
+0000b9 f058                      	brcs	RIGHT_BUTTON
+0000ba 320b                      	cpi		r16, 43
+0000bb f060                      	brcs	UP_BUTTON
+0000bc 3502                      	cpi		r16, 82
+0000bd f068                      	brcs	DOWN_BUTTON
+0000be 3802                      	cpi		r16, 130
+0000bf f070                      	brcs	LEFT_BUTTON
+0000c0 3c0f                      	cpi		r16, 207
+0000c1 f078                      	brcs	SELECT_BUTTON
+0000c2 e000                      	ldi		r16, NULL
+0000c3 940c 00d4                 	jmp		DONE
+                                 
+                                 RIGHT_BUTTON:
+0000c5 e005                      	ldi		r16, RIGHT
+0000c6 940c 00d4                 	jmp		DONE
+                                 UP_BUTTON:
+0000c8 e004                      	ldi		r16, UP
+0000c9 940c 00d4                 	jmp		DONE
+                                 DOWN_BUTTON:
+0000cb e003                      	ldi		r16, DOWN
+0000cc 940c 00d4                 	jmp		DONE
+                                 LEFT_BUTTON:
+0000ce e002                      	ldi		r16, LEFT
+0000cf 940c 00d4                 	jmp		DONE
+                                 SELECT_BUTTON:
+0000d1 e001                      	ldi		r16, SELECT
+0000d2 940c 00d4                 	jmp		DONE
+                                 
+                                 DONE:
+0000d4 9508                      	ret
+                                 
+                                 KEY_READ:
+0000d5 940e 00b6                 	call	KEY
+0000d7 2300                      	tst		r16
+0000d8 f7e1                      	brne	KEY_READ ; old key still pressed
+0000d9 940e 0092                 	call	LCD_ERASE
+                                 KEY_WAIT_FOR_PRESS:
+0000db 940e 00b6                 	call	KEY
+0000dd 2300                      	tst		r16
+0000de f3e1                      	breq	KEY_WAIT_FOR_PRESS ; no key pressed 
+                                 	; new key value available
+                                 
+0000df 9508                      	ret
+                                 
+                                 LCD_COL:
+0000e0 2f10                      	mov		r17, r16
+                                 
+                                 SHIFT:
+0000e1 e104                      	ldi		r16, CURSOR_RIGHT_SHIFT
+0000e2 940e 008a                 	call	LCD_COMMAND
+0000e4 951a                      	dec		r17
+0000e5 f7d9                      	brne	SHIFT
+                                 
+0000e6 9508                      	ret
+                                 
+                                 
+                                 	; RIGHT: 00, UP: 24, LEFT:102, DOWN: 63, SELECT:159 otherwise 255
+                                 	;
+                                 	; Button			None	SELECT		 LEFT		DOWN	  UP    	RIGHT
+                                 	;----------------------------------------------------------------------------
+                                 	; RETURN VALUE		0		  1			  2			  3		  4 		 5	
+                                 	;	INTERVAL	255-208		207-131		130-83		82-44	43-12		12-0
 
 
 RESOURCE USE INFORMATION
@@ -1101,37 +1267,37 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  15 r17:   4 r18:   0 r19:   0 r20:   0 
+r13:   0 r14:   0 r15:   0 r16:  57 r17:   6 r18:   0 r19:   0 r20:   0 
 r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   0 r31:   0 
 Registers used: 2 out of 35 (5.7%)
 
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
-andi  :   1 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
-brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   2 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   0 call  :   7 cbi   :   2 cbr   :   0 
+andi  :   2 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+brcc  :   0 brcs  :   5 break :   0 breq  :   1 brge  :   0 brhc  :   0 
+brhs  :   0 brid  :   0 brie  :   0 brlo  :   1 brlt  :   0 brmi  :   0 
+brne  :   4 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :  29 cbi   :   3 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   0 cpse  :   0 dec   :   2 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   0 jmp   :   2 
-ld    :   0 ldd   :   0 ldi   :   5 lds   :   0 lpm   :   0 lsl   :   4 
-lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
-neg   :   0 nop   :   4 or    :   0 ori   :   0 out   :   1 pop   :   3 
-push  :   3 rcall :   0 ret   :   7 reti  :   0 rjmp  :   0 rol   :   0 
-ror   :   0 sbc   :   0 sbci  :   0 sbi   :   2 sbic  :   0 sbis  :   0 
-sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
+cpi   :   6 cpse  :   0 dec   :   3 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   0 jmp   :   9 
+ld    :   0 ldd   :   0 ldi   :  23 lds   :   3 lpm   :   0 lsl   :   0 
+lsr   :   0 mov   :   1 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
+neg   :   0 nop   :   4 or    :   0 ori   :   2 out   :   5 pop   :   4 
+push  :   4 rcall :   0 ret   :  16 reti  :   0 rjmp  :   0 rol   :   0 
+ror   :   0 sbc   :   0 sbci  :   0 sbi   :   3 sbic  :   0 sbis  :   0 
+sbiw  :   0 sbr   :   0 sbrc  :   1 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
-sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   0 
-sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 14 out of 113 (12.4%)
+sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   3 
+sub   :   0 subi  :   1 swap  :   2 tst   :   2 wdr   :   0 
+Instructions used: 25 out of 113 (22.1%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0000d0    108      0    108   32768   0.3%
+[.cseg] 0x000000 0x0001ce    362      0    362   32768   1.1%
 [.dseg] 0x000100 0x000211      0     17     17    2048   0.8%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 
