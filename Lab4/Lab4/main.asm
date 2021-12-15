@@ -8,6 +8,8 @@
 	.org	$200
 LINE:
 	.byte	16 + 1
+CUR_POS:
+	.byte	1
 
 	.cseg
 	.equ	FN_SET = $28	; 4 bit-mode, 2 line, 5x8 font
@@ -42,12 +44,15 @@ MAIN:
 	
 	call	PORT_INIT
 	call	WAIT
-	call	LCD_INIT	
+	call	LCD_INIT
+	call	LINE_INIT
 
-BLABLA:
+FOREVER:
+	;call	LINE_PRINT
+	
 	call	KEY_READ
-	call	LCD_COL
-	jmp		BLABLA
+	call	HANDLE_KEY
+	jmp		FOREVER
 
 PORT_INIT:
 	ldi		r16, $F0		; corresponds 1111 0000
@@ -93,6 +98,22 @@ LCD_INIT:
 	ldi		r16, E_MODE
 	call	LCD_COMMAND
 
+	; set CUR_POS to Zero
+	clr		r16
+	sts		CUR_POS, r16
+
+	ret
+
+LINE_INIT:
+	ldi		r16, 16 + 1
+	ldi		YH, HIGH(LINE)
+	ldi		YL, LOW(LINE)
+
+SET_ZERO:
+	clr		r17
+	st		Y+, r17
+	dec		r16
+	brne	SET_ZERO
 	ret
 
 WAIT:
@@ -150,11 +171,16 @@ LCD_COMMAND:
 LCD_HOME:
 	ldi		r16, RET_HOME
 	call	LCD_COMMAND
+
 	ret
 
 LCD_ERASE:
 	ldi		r16, LCD_CLR
 	call	LCD_COMMAND
+
+	; set CUR_POS to Zero
+	clr		r16
+	sts		CUR_POS, r16
 	ret
 
 
@@ -235,24 +261,73 @@ KEY_READ:
 	call	KEY
 	tst		r16
 	brne	KEY_READ ; old key still pressed
-	call	LCD_ERASE
 KEY_WAIT_FOR_PRESS:
 	call	KEY
 	tst		r16
 	breq	KEY_WAIT_FOR_PRESS ; no key pressed 
 	; new key value available
-
 	ret
 
 LCD_COL:
 	mov		r17, r16
+	sts		CUR_POS, r16
+	call	LCD_HOME
+	cpi		r17, 0
+	breq	DONE_SHIFT
 
 SHIFT:
 	ldi		r16, CURSOR_RIGHT_SHIFT
 	call	LCD_COMMAND
 	dec		r17
 	brne	SHIFT
+DONE_SHIFT:
+	ret
 
+LINE_PRINT:
+	call	LCD_HOME
+	ldi		ZH, HIGH(LINE)
+	ldi		ZL, LOW(LINE)
+	call	LCD_PRINT
+	ret
+
+LCD_PRINT:
+NEXT_CHAR:
+	ld		r16, Z+
+	cpi		r16, 0
+	breq	DONE_PRINT
+	call	LCD_ASCII
+	jmp		NEXT_CHAR
+DONE_PRINT:
+	ret
+
+HANDLE_KEY:
+	cpi		r16, LEFT
+	breq	LEFT_PRESSED
+	cpi		r16, RIGHT
+	breq	RIGHT_PRESSED
+	cpi		r16, UP
+	breq	UP_PRESSED
+	cpi		r16, DOWN
+	breq	DOWN_PRESSED
+
+
+LEFT_PRESSED:
+	lds		r16, CUR_POS
+	dec		r16
+	call	LCD_COL
+	jmp		RETURN
+
+RIGHT_PRESSED:
+	lds		r16, CUR_POS
+	inc		r16
+	call	LCD_COL
+	jmp		RETURN
+UP_PRESSED:
+
+DOWN_PRESSED:
+
+
+RETURN:
 	ret
 
 
